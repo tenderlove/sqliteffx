@@ -1,0 +1,4 @@
+/Gemfile.lock
+/tmp/
+/lib/sqliteffx/sqliteffx.bundle
+/ext/sqliteffx/sqliteffx.c
