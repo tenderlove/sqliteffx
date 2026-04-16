@@ -125,19 +125,20 @@ module Sqliteffx
       stmt  = @handle
       ncols = Sqliteffx.sqlite3_column_count(stmt)
 
-      loop do
-        rc = Sqliteffx.sqlite3_step(stmt)
-        break if rc == SQLITE_DONE
+      while (rc = Sqliteffx.sqlite3_step(stmt)) != SQLITE_DONE
         raise Error, Sqliteffx.sqlite3_errmsg(@db.handle) if rc != SQLITE_ROW
 
-        row = Array.new(ncols) do |i|
-          case Sqliteffx.sqlite3_column_type(stmt, i)
+        row = []
+        i = 0
+        while i < ncols
+          row << case Sqliteffx.sqlite3_column_type(stmt, i)
           when SQLITE_INTEGER then Sqliteffx.sqlite3_column_int64(stmt, i)
           when SQLITE_FLOAT   then Sqliteffx.sqlite3_column_double(stmt, i)
           when SQLITE_TEXT    then Sqliteffx.sqlite3_column_text(stmt, i)
           when SQLITE_NULL    then nil
           else                     Sqliteffx.sqlite3_column_text(stmt, i)
           end
+          i += 1
         end
 
         yield row

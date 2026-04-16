@@ -18,7 +18,7 @@ module Sqliteffx
   attach_function :sqlite3_errmsg,            [:pointer],                         :string
   attach_function :sqlite3_free,              [:pointer],                         :void
 
-  # Prepared statements — how we read rows back without needing a callback.
+  # Prepared statements
   attach_function :sqlite3_prepare_v2,        [:pointer, :string, :int, :pointer, :pointer], :int
   attach_function :sqlite3_step,              [:pointer],                         :int
   attach_function :sqlite3_reset,             [:pointer],                         :int

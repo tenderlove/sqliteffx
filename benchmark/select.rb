@@ -66,7 +66,9 @@ IPS.run do |x|
     ffx_db.execute("SELECT x, y, z FROM t") { |_| rows += 1 }
     rows
   end
+end
 
+IPS.run do |x|
   # Reusing a prepared statement: step + column work only.
   x.report("sqlite3-ruby  prepared each") do
     rows = 0
@@ -88,5 +90,4 @@ IPS.run do |x|
     ffx_select.execute { |_| rows += 1 }
     rows
   end
-
 end
