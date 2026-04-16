@@ -125,9 +125,7 @@ module Sqliteffx
       stmt  = @handle
       ncols = Sqliteffx.sqlite3_column_count(stmt)
 
-      while (rc = Sqliteffx.sqlite3_step(stmt)) != SQLITE_DONE
-        raise Error, Sqliteffx.sqlite3_errmsg(@db.handle) if rc != SQLITE_ROW
-
+      while (rc = Sqliteffx.sqlite3_step(stmt)) == SQLITE_ROW
         row = []
         i = 0
         while i < ncols
@@ -143,6 +141,11 @@ module Sqliteffx
 
         yield row
       end
+
+      if rc != SQLITE_DONE
+        raise Error, Sqliteffx.sqlite3_errmsg(@db.handle)
+      end
+
       self
     end
 

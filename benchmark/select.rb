@@ -68,6 +68,8 @@ IPS.run do |x|
   end
 end
 
+puts
+
 IPS.run do |x|
   # Reusing a prepared statement: step + column work only.
   x.report("sqlite3-ruby  prepared each") do
